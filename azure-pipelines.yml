@@ -52,11 +52,11 @@ stages:
         - task: Npm@1
           inputs:
             command: 'install'
-            workingDir: 'abp/npm'
+            workingDir: 'npm'
         - task: Npm@1
           inputs:
             command: 'custom'
-            workingDir: 'abp/npm'
+            workingDir: 'npm'
             customCommand: 'run build'
         - task: PublishBuildArtifacts@1
           inputs:
