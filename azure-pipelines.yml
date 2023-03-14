@@ -12,60 +12,60 @@ stages:
   jobs:
   - job: backend_build
     steps:
-        - task: NuGetCommand@2
-          inputs:
-            command: 'restore'
-            restoreSolution: '**/*.sln'
-            feedsToUse: 'select'
-        - task: DotNetCoreCLI@2
-          inputs:
-            command: 'restore'
-            projects: '**/*.sln'
-            feedsToUse: 'select'
-        - task: DotNetCoreCLI@2
-          inputs:
-            command: 'build'
-            projects: '**/*.sln'
-        - task: DotNetCoreCLI@2
-          inputs:
-            command: 'test'
-            projects: '**/*.sln'
-        - task: PublishBuildArtifacts@1
-          inputs:
-            PathtoPublish: '$(Build.SourcesDirectory)'
-            ArtifactName: 'backend'
-            publishLocation: 'Container'
-        - task: DownloadBuildArtifacts@1
-          inputs:
-            buildType: 'current'
-            downloadType: 'single'
-            artifactName: 'backend'
-            downloadPath: '$(System.ArtifactsDirectory)'
+    - task: NuGetCommand@2
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        feedsToUse: 'select'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: '**/*.sln'
+        feedsToUse: 'select'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.sln'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: '**/*.sln'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)'
+        ArtifactName: 'backend'
+        publishLocation: 'Container'
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'backend'
+        downloadPath: '$(System.ArtifactsDirectory)'
   - job: frontend_build
     pool:
      VmImage: ubuntu-latest
     steps:
-        - task: NodeTool@0
-          inputs:
-            versionSource: 'spec'
-            versionSpec: '14.x'
-        - task: Npm@1
-          inputs:
-            command: 'install'
-            workingDir: 'npm'
-        - task: Npm@1
-          inputs:
-            command: 'custom'
-            workingDir: 'npm'
-            customCommand: 'run build'
-        - task: PublishBuildArtifacts@1
-          inputs:
-            PathtoPublish: '$(Build.SourcesDirectory)dist\packages\account'
-            ArtifactName: 'frontend'
-            publishLocation: 'Container'
-        - task: DownloadBuildArtifacts@1
-          inputs:
-            buildType: 'current'
-            downloadType: 'single'
-            artifactName: 'frontend'
-            downloadPath: '$(System.ArtifactsDirectory)'
+    - task: NodeTool@0
+      inputs:
+        versionSource: 'spec'
+        versionSpec: '14.x'
+    - task: Npm@1
+      inputs:
+        command: 'install'
+        workingDir: 'npm'
+    - task: Npm@1
+      inputs:
+        command: 'custom'
+        workingDir: 'npm'
+        customCommand: 'run build'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)dist\packages\account'
+        ArtifactName: 'frontend'
+        publishLocation: 'Container'
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'frontend'
+        downloadPath: '$(System.ArtifactsDirectory)'
