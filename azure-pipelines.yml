@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- dev
+- master
 stages:
 - stage:
   pool:
@@ -41,10 +41,12 @@ stages:
             downloadType: 'single'
             artifactName: 'backend'
             downloadPath: '$(System.ArtifactsDirectory)'
-        - job: frontend_build
-          pool:
-          VmImage: ubuntu-latest
-          steps:
+- stage:
+  pool:
+    vmImage: ubuntu-latest
+    jobs:
+      job:
+        steps:
         - task: NodeTool@0
           inputs:
             versionSource: 'spec'
