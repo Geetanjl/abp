@@ -15,21 +15,21 @@ stages:
         - task: NuGetCommand@2
           inputs:
             command: 'restore'
-            restoreSolution: 'LocalizationKeySynchronizer.sln'
+            restoreSolution: '**/*.sln'
             feedsToUse: 'select'
         - task: DotNetCoreCLI@2
           inputs:
             command: 'restore'
-            projects: 'LocalizationKeySynchronizer.sln'
+            projects: '**/*.sln'
             feedsToUse: 'select'
         - task: DotNetCoreCLI@2
           inputs:
             command: 'build'
-            projects: 'LocalizationKeySynchronizer.sln'
+            projects: '**/*.sln'
         - task: DotNetCoreCLI@2
           inputs:
             command: 'test'
-            projects: 'LocalizationKeySynchronizer.sln'
+            projects: '**/*.sln'
         - task: PublishBuildArtifacts@1
           inputs:
             PathtoPublish: '$(Build.SourcesDirectory)'
