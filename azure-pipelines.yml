@@ -1,0 +1,71 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- dev
+stages:
+- stage:
+  pool:
+    vmImage: ubuntu-latest
+    jobs:
+      job:
+        steps:
+        - task: NuGetCommand@2
+          inputs:
+            command: 'restore'
+            restoreSolution: 'LocalizationKeySynchronizer.sln'
+            feedsToUse: 'select'
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'restore'
+            projects: 'LocalizationKeySynchronizer.sln'
+            feedsToUse: 'select'
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'build'
+            projects: 'LocalizationKeySynchronizer.sln'
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'test'
+            projects: 'LocalizationKeySynchronizer.sln'
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.SourcesDirectory)'
+            ArtifactName: 'backend'
+            publishLocation: 'Container'
+        - task: DownloadBuildArtifacts@1
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'backend'
+            downloadPath: '$(System.ArtifactsDirectory)'
+        - job: frontend_build
+          pool:
+          VmImage: ubuntu-latest
+          steps:
+        - task: NodeTool@0
+          inputs:
+            versionSource: 'spec'
+            versionSpec: '14.x'
+        - task: Npm@1
+          inputs:
+            command: 'install'
+            workingDir: 'abp/npm'
+        - task: Npm@1
+          inputs:
+            command: 'custom'
+            workingDir: 'abp/npm'
+            customCommand: 'run build'
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.SourcesDirectory)dist\packages\account'
+            ArtifactName: 'frontend'
+            publishLocation: 'Container'
+        - task: DownloadBuildArtifacts@1
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'frontend'
+            downloadPath: '$(System.ArtifactsDirectory)'
