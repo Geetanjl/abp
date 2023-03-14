@@ -4,14 +4,14 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- dev
 stages:
-- stage:
+- stage: 
   pool:
     vmImage: windows-latest
-    jobs:
-      job:
-        steps:
+  jobs:
+  - job: backend_build
+    steps:
         - task: NuGetCommand@2
           inputs:
             command: 'restore'
@@ -41,12 +41,10 @@ stages:
             downloadType: 'single'
             artifactName: 'backend'
             downloadPath: '$(System.ArtifactsDirectory)'
-- stage:
-  pool:
-    vmImage: ubuntu-latest
-    jobs:
-      job:
-        steps:
+  - job: frontend_build
+    pool:
+     VmImage: ubuntu-latest
+    steps:
         - task: NodeTool@0
           inputs:
             versionSource: 'spec'
