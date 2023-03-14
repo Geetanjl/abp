@@ -52,11 +52,11 @@ stages:
     - task: Npm@1
       inputs:
         command: 'install'
-        workingDir: 'npm'
+        workingDir: 'npm/ng-packs'
     - task: Npm@1
       inputs:
         command: 'custom'
-        workingDir: 'npm'
+        workingDir: 'npm/ng-packs'
         customCommand: 'run build'
     - task: PublishBuildArtifacts@1
       inputs:
