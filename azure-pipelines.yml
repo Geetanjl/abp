@@ -8,7 +8,7 @@ trigger:
 stages:
 - stage:
   pool:
-    vmImage: ubuntu-latest
+    vmImage: windows-latest
     jobs:
       job:
         steps:
