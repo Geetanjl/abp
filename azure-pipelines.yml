@@ -55,7 +55,7 @@ stages:
         customCommand: 'run build'
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.SourcesDirectory)/dist/packages/account'
+        PathtoPublish: '$(Build.SourcesDirectory)/npm/ng-packs/dist/packages/account'
         ArtifactName: 'frontend'
         publishLocation: 'Container'
     - task: DownloadBuildArtifacts@1
