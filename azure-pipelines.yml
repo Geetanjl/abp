@@ -23,7 +23,7 @@ stages:
         projects: '**/*.sln'
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.SourcesDirectory)\src\bin\Debug\net7.0'
+        PathtoPublish: '$(Build.SourcesDirectory)\tools\localization-key-synchronizer\src\bin\Debug\net7.0'
         ArtifactName: 'backend'
         publishLocation: 'Container'
     - task: DownloadBuildArtifacts@1
