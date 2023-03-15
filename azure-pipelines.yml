@@ -11,6 +11,7 @@ stages:
     vmImage: windows-latest
   jobs:
   - job: backend_build
+    timeoutInMinutes: 120
     steps:
     - task: DotNetCoreCLI@2
       inputs:
